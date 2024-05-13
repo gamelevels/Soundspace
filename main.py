@@ -8,7 +8,7 @@ from models.note import Note
 import pygame as pg
 from collections import deque
 
-songName = "piles"
+songName = "flamewall"
 
 pg.mixer.pre_init(44100, -16, 2, 2048)
 
