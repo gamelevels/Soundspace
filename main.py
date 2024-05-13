@@ -3,12 +3,15 @@ from src import boundaries
 from src import noteload
 from src import score
 from src import renderui as UI
+from models.score import Score
 from models.appvars import Globals
+from models import handler as Handler
 from models.note import Note
 import pygame as pg
 from collections import deque
+from random import randint
 
-songName = "flamewall"
+songName = "piles"
 
 pg.mixer.pre_init(44100, -16, 2, 2048)
 
@@ -33,21 +36,25 @@ displayingNotes = set()
 
 pg.init()
 
+nextTimeInterval = 0
+
 mouseCursor = pg.image.load("cursor.png").convert_alpha()
 
 done = False
 while not done:
     for event in pg.event.get():
-        if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+        if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             done = True
-        elif event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
-            print(pg.mouse.get_pos())
 
     MainScreen.fill(BackgroundColor)
     boundaries.CheckBoundaries(LockedArea)
 
     UI.RenderUI(MainScreen, mySong)
     CurrentTime = pg.time.get_ticks()-500
+    UI.RenderScoreDisplay(MainScreen, CurrentTime)
+    MainPanel =  UI.RenderMainPanel()
+    ScorePOS = [MainPanel.center[0] + randint(-100,100), MainPanel.center[1] + 280 + randint(-10,10)]
+    TimePOS = [MainPanel.center[0], MainPanel.center[1] - 270]
 
     if CurrentTime > 0:
         if not musicStarted:
@@ -57,13 +64,19 @@ while not done:
             pg.mixer.music.play(-1)
             musicStarted = True
 
+        UI.RenderTimeRemaining(MainScreen, mySong.Seconds + mySong.Session.TimeRemaining, TimePOS)
+
+        print(f"current: {CurrentTime} | seconds: {mySong.Seconds} | remaining: {mySong.Session.TimeRemaining}")
+        if CurrentTime > nextTimeInterval:
+            nextTimeInterval += 1000
+            mySong.Session.TimeRemaining -= 1
+
         largestNote: Note = Note(0,0,0,(0,0,0))
         largestSize = 0
 
         pg.mouse.set_visible(False)
         if pg.mouse.get_focused():
             MainScreen.blit(mouseCursor, pg.mouse.get_pos())
-
         for note in noteQueue:
             timeOffset = CurrentTime - note.Delay
             if 0 <= timeOffset <= Globals.spawnInSpeed: 
@@ -84,8 +97,12 @@ while not done:
                     if abs(mousePos[0] - noteRectangle.x) < 60 and abs(mousePos[1] - noteRectangle.y) < 60:
                         if 100-Globals.sizeScoreDiscrepancy < size <= 100:
                             if note.Delay not in hitNotes:
-                                hit = pg.mixer.Sound("sounds/hit.wav")
-                                hit.play()
+                                # need to rewrite this, kept adding to it and didnt organize it properly
+                                # will refactor with a v2
+                                scoredisplay = Score(Text=f"+{mySong.Session.Multiplier * Globals.baseScore}", POS=ScorePOS, StartMS=CurrentTime, DisplayMS=500)
+                                Handler.Handler.displayScore.append(scoredisplay)
+                                Handler.HandleScore(CurrentTime)
+                                
                                 score.hit(mySong)
                                 passedNotes.add(note.Delay)
                                 hitNotes.add(note.Delay)

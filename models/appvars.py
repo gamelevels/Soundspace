@@ -30,6 +30,7 @@ class Globals:
     
     spawnTranslate = (100 - noteSize)
 
-
     sizeScoreDiscrepancy = 90
+
+    scoreDisplayMS = 500
 

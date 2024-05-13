@@ -1,9 +1,12 @@
 from models.song import Song
 from models.session import Session
 from models.appvars import Globals
+import src.renderui as UI
 from math import ceil
+import pygame as pg
 
 def hit(song: Song) -> None:
+    pg.mixer.Sound("sounds/hit.wav").play()
     calculate(song.Session)
 
 def miss(song: Song) -> None:

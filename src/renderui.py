@@ -1,7 +1,21 @@
 import pygame as pg
 from models.song import Song
 from models.appvars import Globals
+from models import handler
+from src.display import ConvertSeconds
 
+def RenderTimeRemaining(MainScreen: pg.display, TimeLeft: int, POS: tuple[int, int]) -> None:
+    Hours, Minutes, Seconds = ConvertSeconds(TimeLeft)
+    font = pg.font.SysFont('microsoft', 40)
+    RenderText(MainScreen, f"Time Remaining: {Hours:02d}:{Minutes:02d}:{Seconds:02d}", font, POS)
+
+def RenderScoreDisplay(MainScreen: pg.display, CurrentTime: int) -> None:
+    font = pg.font.SysFont('microsoft', 40)
+
+    for score in handler.Handler.displayScore:
+        if CurrentTime - score.StartMS < score.DisplayMS:
+            RenderText(MainScreen, score.Text, font, score.POS)
+                        
 def RenderSidePanels(xOffset: int) -> pg.Rect:
     return pg.Rect(Globals.screenWidth/2-Globals.sidePanelX/2+xOffset,
                 Globals.screenHeight/2-Globals.SidePanelY/2,
@@ -19,9 +33,6 @@ def RenderBoundaries() -> pg.Rect:
                 (Globals.screenHeight/2-Globals.centerRectangleDimension/2)-150,
                 Globals.centerRectangleDimension+50,
                 Globals.centerRectangleDimension+50)
-
-def RenderFont(label: str, font: pg.font):
-    return font.render(label, True, (255, 255, 255))
 
 def RenderText(screen: pg.display, text: str, font: pg.font, pos) -> None:
     textFont = font.render(text, True, (255, 255, 255))
