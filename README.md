@@ -1,14 +1,26 @@
-# Soundspace remake in python
-**This is a PoC before 3D development**
+# Soundspace remake in Python
 
+> ***==Proof of concept==, built as I thought , ~no~ planning***
+**v0.5**
+
+
+---
+Plans:
+- [x] Finish PoC - v0.5
+- [ ] Rewrite with proper structure in Pygame - v1
+- [ ] Rewrite in C# with Godot - v2
+- [ ] Rewrite in PYthon with Panda3D - v1.5
+
+---
 ## Install instructions
 ```
 git clone https://github.com/devtrades/Soundspace
 cd Soundspace
-pip3 install -r requirements.txt
+pip(3) install -r requirements.txt
 
-- Depending on global variables
-py main.py
-py3 main.py
-python main.py
+py(3) main.py
+or
+python(3) main.py
 ```
+
+

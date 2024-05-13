@@ -1,3 +1,22 @@
+'''
+Proof of concept, built as I thought, no planning
+v0.5
+
+Plans:
+    ~ Finish PoC
+        - Time worked on: ~15 hours
+
+    ~ Rewrite with proper structure in Pygame
+        - v1.0
+
+    ~ Rewrite in C# with Godot
+        - v2.0
+
+    ~ Rewrite in Python with Panda3D
+        - v1.5
+'''
+
+
 from src import mapload
 from src import boundaries
 from src import noteload
@@ -11,7 +30,7 @@ import pygame as pg
 from collections import deque
 from random import randint
 
-songName = "piles"
+songName = "intercosmic2"
 
 pg.mixer.pre_init(44100, -16, 2, 2048)
 
@@ -40,11 +59,22 @@ nextTimeInterval = 0
 
 mouseCursor = pg.image.load("cursor.png").convert_alpha()
 
+MainPanel =  UI.RenderMainPanel()
+ScorePOS = [MainPanel.center[0] + randint(-100,100), MainPanel.center[1] + 280 + randint(-10,10)]
+TimePOS = [MainPanel.center[0], MainPanel.center[1] - 270]
+
 done = False
 while not done:
     for event in pg.event.get():
         if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             done = True
+        elif event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+            ''' implement pause '''
+            continue
+        elif event.type == pg.KEYDOWN and event.key == pg.K_r:
+            ''' implement end song, 3s confirm '''
+            continue
+
 
     MainScreen.fill(BackgroundColor)
     boundaries.CheckBoundaries(LockedArea)
@@ -52,9 +82,6 @@ while not done:
     UI.RenderUI(MainScreen, mySong)
     CurrentTime = pg.time.get_ticks()-500
     UI.RenderScoreDisplay(MainScreen, CurrentTime)
-    MainPanel =  UI.RenderMainPanel()
-    ScorePOS = [MainPanel.center[0] + randint(-100,100), MainPanel.center[1] + 280 + randint(-10,10)]
-    TimePOS = [MainPanel.center[0], MainPanel.center[1] - 270]
 
     if CurrentTime > 0:
         if not musicStarted:
@@ -65,8 +92,6 @@ while not done:
             musicStarted = True
 
         UI.RenderTimeRemaining(MainScreen, mySong.Seconds + mySong.Session.TimeRemaining, TimePOS)
-
-        print(f"current: {CurrentTime} | seconds: {mySong.Seconds} | remaining: {mySong.Session.TimeRemaining}")
         if CurrentTime > nextTimeInterval:
             nextTimeInterval += 1000
             mySong.Session.TimeRemaining -= 1
@@ -117,4 +142,4 @@ while not done:
             noteQueue.popleft()
 
         pg.display.flip()
-    FrameClock.tick(144)
+    FrameClock.tick(90)
