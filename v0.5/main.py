@@ -57,7 +57,7 @@ pg.init()
 
 nextTimeInterval = 0
 
-mouseCursor = pg.image.load("cursor.png").convert_alpha()
+mouseCursor = pg.image.load("../assets/cursor.png").convert_alpha()
 
 MainPanel =  UI.RenderMainPanel()
 ScorePOS = [MainPanel.center[0] + randint(-100,100), MainPanel.center[1] + 280 + randint(-10,10)]
@@ -86,7 +86,7 @@ while not done:
     if CurrentTime > 0:
         if not musicStarted:
             pg.mixer.init()
-            pg.mixer.music.load(f'maps/{songName}.mp3')
+            pg.mixer.music.load(f'../maps/{songName}.mp3')
             pg.mixer.music.set_volume(.3)
             pg.mixer.music.play(-1)
             musicStarted = True

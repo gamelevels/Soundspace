@@ -1,0 +1,15 @@
+{
+    "ApproachRate": 65,
+    "ApproachDistance": 28,
+    "FadeInLength": 4,
+    "Parallax": 12,
+
+    "HitSounds": true,
+    "MissSounds": false,
+
+    "HitFlash": false,
+    "ScorePopup": false,
+    "GridLines": false,
+
+    "CursorIcon": "https://linktowebsite.com/img.png",
+}

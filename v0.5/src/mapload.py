@@ -8,7 +8,7 @@ from models.appvars import Globals
 
 def LoadSong(songName: str) -> Song | None:
     try:
-        with open(f"maps/{songName}.txt", "r") as song:
+        with open(f"../maps/{songName}.txt", "r") as song:
             songData = song.read().split(",")
             songID = songData[0]
 

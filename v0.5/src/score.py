@@ -6,7 +6,7 @@ from math import ceil
 import pygame as pg
 
 def hit(song: Song) -> None:
-    pg.mixer.Sound("sounds/hit.wav").play()
+    pg.mixer.Sound("../sounds/hit.wav").play()
     calculate(song.Session)
 
 def miss(song: Song) -> None:
