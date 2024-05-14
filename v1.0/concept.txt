@@ -1,0 +1,32 @@
+Soundspace (remake) is a rhythm game, where you have to hit notes consecutively without missing more than 5 times
+
+Maps will be stored in the following pattern:
+
+map_id,note,note,note.....
+
+note:
+    (X | Y | Delay (MS))
+    X - (0,0), (1,0), (2,0)
+    Y - (0,0), (0,1), (0,2)
+    Delay - MS since song has started before displaying
+
+There's a 3x3 grid centered in the screen
+Notes will spawn in any of the areas in the grid
+
+There will be notes called Quantum notes
+These will not spawn on a 3x3 grid, they will have an X/Y offset multiplier
+
+example
+        -0.2|1.4|55,1.1|-2.1|155
+
+
+Work order:
+    Create file structure
+    Rebuild objects
+    Create global stores
+    Create map/asset loading
+    Create error logging
+    Build source code
+    Create main game loop
+
+
