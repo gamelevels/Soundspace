@@ -30,7 +30,7 @@ import pygame as pg
 from collections import deque
 from random import randint
 
-songName = "intercosmic2"
+songName = "piles"
 
 pg.mixer.pre_init(44100, -16, 2, 2048)
 
