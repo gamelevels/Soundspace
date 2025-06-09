@@ -1,8 +1,5 @@
 # Soundspace remake in Python
-# Paused development June 2024
-> ***==Proof of concept==, built as I thought , ~no~ planning***
 **v0.5**
-
 
 ---
 Plans:
